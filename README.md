@@ -27,23 +27,18 @@ Stacks currently included, grouped by language
 PHP:
 
 Zend Framework 2.3 @ Apache/2.4.9 (Unix) + PHP 5.5.13
-
 Zend Framework 2.3 @ Apache/2.4.9 (Unix) + PHP 5.5.13 + zend_extension=opcache.so
 
 
 Phalcon Framwork 1.3.2 @ Apache/2.4.9 (Unix) + PHP 5.5.13
-
 Phalcon Framwork 1.3.2 @ Apache/2.4.9 (Unix) + PHP 5.5.13 + zend_extension=opcache.so
-
 Phalcon Framwork 1.3.2 @ Apache/2.4.9 (Unix) + PHP 5.5.13 + zend_extension=opcache.so + eventlib + REACT PHP
 
 
 node.js:
 
 Hapi 6.0.1 @ node v0.10.29
-
 Restify @ TODO
-
 Express.js @ TODO
 
 complete output of testapps:
