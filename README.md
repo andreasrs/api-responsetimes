@@ -1,7 +1,7 @@
 Disclaimer
 =========
 
-This project contains some applications that can be bombed using apachebench(ab) or siege. The applications implement a theoretical but realistic scenario implemented in different languages/frameworksi all resulting in the same output; solving the problem in a "realistic" and not "highly optimized" way within the scope of given tools.
+This project contains some applications that can be bombed using apachebench(ab) or siege. The applications implement a theoretical but realistic scenario implemented in different languages/frameworks. All examples result in the same output; solving the problem in a "realistic" way within the scope of given tools.
 
 This CAN be useful to get an overview on how the technologies behave with default/sane settings on a given machine, but should not be considered as absolute evidence as "the best framework for x" or "runtime x is so much better than y" alone. Use COMMON SENSE when interpreting the results, and be sure to study and understand what the applications actually do. All the code is there. The primary goals is to get a basic idea and overview of the baseline responsetimes to expect when creating a new API using these modern frameworks.
 
@@ -28,6 +28,7 @@ Writing good and realistic mini-tests that give an impression of performance pot
 Stacks currently included, grouped by language
 ========================
 PHP:
+
 Zend Framework 2.3 @ Apache/2.4.9 (Unix) + PHP 5.5.13
 Zend Framework 2.3 @ Apache/2.4.9 (Unix) + PHP 5.5.13 + zend_extension=opcache.so
 
@@ -36,20 +37,25 @@ Phalcon Framwork 1.3.2 @ Apache/2.4.9 (Unix) + PHP 5.5.13 + zend_extension=opcac
 Phalcon Framwork 1.3.2 @ Apache/2.4.9 (Unix) + PHP 5.5.13 + zend_extension=opcache.so + eventlib + REACT PHP
 
 node.js:
+
 Hapi 6.0.1 @ node v0.10.29
 
 Restify @ TODO
 
 Express.js @ TODO
 
+Results:
+=======
+TODO
+
 Running conclusion:
 ================
-* ZF2 is terrible for this type of scenario. I have looked at the entire callstack using XDEBUG because the results were so awful. To summarize ZF2 is CPU-bound quickly as a result of over 900 individual function calls for this simple task of fetching external data and building a response, some of which trigger dynamic call_user_func(...); in order to bootstrap the ZF2 ServiceManager and EventManager at the beginning. These call_user_func and similar are hard for PHP opcache or other optimizers to speed up. At the moment I therefore tag ZF2 as unviable for these usecases because of the CPU-intensive overhead. For a very low amount of concurrent requests it works fine, but you will have to start throwing more hardware at it very fast in order to avoid longer responsetimes.
+* ZF2 is terrible for this particular type of job. I have looked at the entire callstack using XDEBUG because the results were so awful. To summarize ZF2 is CPU-bound quickly as a result of over 900 individual PHP function calls for this simple task of fetching external data and then building a response. Some of these function calls are dynamic PHP call_user_func(...); that take place in order to bootstrap the ZF2 ServiceManager and EventManager at the beginning. These call_user_func and similar are hard for PHP opcache or other optimizers to speed up. At the moment I therefore view ZF2 as unviable for these usecases because of the CPU-intensive overhead. For a very low amount of concurrent requests it does work fine, but you will have to start throwing more hardware at it very fast in order to avoid longer responsetimes. And these tests are all about responsetimes at different amounts of stress!
 * Phalcon is viable, and is much closer to "raw PHP" as it does not run a whole lot of PHP code upon every request that is hard to optimize via opcache. The Phalcon core functionality is all coded in C and exposed via. a compiled module.
 * node.js frameworks perform well and as expected on this type of thing and can be used with good responsetimes
 
-At the moment I am a little surprised that the synchronous (I/O) Phalcon application keeps up so well. I would have expected the async IO running in the node.js applications to pull away as we do perform 10 external http requests for each response we generate, but this seems to not be the case here. I do however expect the async I/O in nodejs will pay off more in an environment where individual waits on the external resource increase.
+At the moment I am a little surprised that the synchronous (I/O) Phalcon application keeps up so well with node. I would have expected the async I/O running in the node.js applications to pull away more as we do actually perform 10 external http requests for each response we generate. I do however expect the async I/O in nodejs will pay off more in an environment where individual waits on the external resource increase. Elasticsearch is pretty awesome and does not punish synchronous I/O a lot here.
 
-ReactPHP was a bit disappointing as it overall turns out slower than simply running the HTTP requests in a synchronous way from PHP in this particular case. I am no experienced user of this framework and so this could also be a mistake in the implementation. I DID however install and verify that the "eventlib" C extension was installed in order to help ReactPHP performance.
+ReactPHP was a bit disappointing as it overall turns out SLOWER than simply running the HTTP requests in a synchronous way from PHP in this particular case. I am no experienced user of this framework and so this could also be a mistake in the implementation. I DID however install and verify that the "eventlib" C extension was installed in order to help ReactPHP performance. I have not taken the time to look at XDEBUG output yet.
 
-This is fairly tricky stuff to "test", so please keep an open and critical mind when interpreting these results.
+Again, this is fairly tricky stuff to "test", so please keep an open and critical mind when interpreting these results.
