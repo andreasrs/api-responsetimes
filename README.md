@@ -226,6 +226,7 @@ Disclaimer
 =========
 
 This project contains some applications that can be bombed using apachebench(ab) or siege. The applications implement a theoretical but realistic scenario implemented in different languages/frameworks. All examples result in the same output; solving the problem in a "realistic" way within the scope of given tools.
+It is not over-normalized nor very pre-optimized. It aims to represent typical code running in a typical application on the given framework.
 
 This CAN be useful to get an overview on how the technologies behave with default/sane settings on a given machine, but should not be considered as absolute evidence as "the best framework for x" or "runtime x is so much better than y" alone. Use COMMON SENSE when interpreting the results, and be sure to study and understand what the applications actually do. All the code is there. The primary goals is to get a basic idea and overview of the baseline responsetimes to expect when creating a new API using these modern frameworks. If you serve a lot of static data be sure to check out the awesome Varnish Cache (http://varnish-cache.org) instead of wasting your time with micro-optimization!
 
