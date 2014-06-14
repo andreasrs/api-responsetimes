@@ -33,7 +33,19 @@ class IndexController extends Mvc\Controller {
                 $response->on('end', function ($response) use (&$buffer, &$completeResponses) {
                     $completeResponses[] = json_decode($buffer, true);
                     if (count($completeResponses) == self::numExternalRequests) {
-                        echo(json_encode($completeResponses));
+                        // create a new response structure using our fetched data
+                        $result = array(
+                            'date' => time(),
+                            'shards' => $completeResponses[0]['_shards']['total'],
+                            'hits' => $completeResponses[9]['hits']['hits']
+                        );
+
+                        // construct object further with a bit of iteration
+                        for ($i=0;$i<10;$i++) {
+                            $result['hits'][] = $completeResponses[$i]['hits']['hits'][0];
+                        }
+
+                        echo(json_encode($result));
                     }
                 });
             });
