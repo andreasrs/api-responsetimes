@@ -1,1 +1,1 @@
-curl -X POST -H 'Content-Type: application/json' -d '{"full": {"title": "test entity title","description": "test entity description"},"summary": {"title": "test entity title"}}' http:/localhost:9200/entitylib/entity
+curl -X POST -H 'Content-Type: application/json' -d '{"full": {"title": "test entity title","description": "test entity description"},"summary": {"title": "test entity title"}}' http://localhost:9200/entitylib/entity
