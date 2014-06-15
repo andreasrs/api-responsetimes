@@ -24,7 +24,7 @@ The purpose of this set of tests is to get an overall impression on "how a techn
 Run a HTTP benchmarking tool against these example-apps on various platforms and get a rough idea if a framework / server is suitable. Sometimes one needs low responsetimes without a reverse proxy cache.
 
 
-Stacks currently included in the test resultdata, grouped by language
+Stacks currently included in the test resultdata
 ========================
 PHP:
 
