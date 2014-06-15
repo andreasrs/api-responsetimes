@@ -2,7 +2,6 @@ var cluster = require('cluster');
 var numCPUs = require('os').cpus().length;
 
 if (cluster.isMaster) {
-
     // as we want to get a realistic impression of baseline performance, make sure we utilize available system cores
   for (var i = 0; i < numCPUs; i++) {
     cluster.fork();
