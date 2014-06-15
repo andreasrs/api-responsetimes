@@ -1,4 +1,4 @@
-webservice-aggregator-comparison
+api-responsetimes
 ==========================
 
 A set of micro webservices that fetch the same amount of content from HTTP and then build a new JSON structure based on the fetched content before returning it to the client.
